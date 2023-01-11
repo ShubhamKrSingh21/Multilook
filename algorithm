@@ -1,0 +1,39 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{algorithm} 
+\usepackage{algpseudocode} 
+\usepackage[noend]{algpseudocode}
+\algdef{SE}{Begin}{End}{\textbf{begin}}{\textbf{end}}
+\begin{document} 
+\begin{algorithm}
+	\caption{Orientation Angle Estimation} 
+	\begin{algorithmic}[1]
+		\State \textbf{Data:} $[T]$ matrix
+            \State \textbf{Result:} Orientation compensating angle $\left(\theta_0\right)$
+            \Begin
+                \State $[\mathbf{T}]^{\prime} \leftarrow\left[\mathbf{U}_{\mathbf{3}}(\theta)\right][\mathbf{T}]\left[\mathbf{U}_{\mathbf{3}}(\theta)\right]^{-1} \forall \theta \rightarrow[-\pi / 4,+\pi / 4];$
+
+                \State Find common peaks in $d_{H \phi_3} \leftarrow d_H\left(\sigma_3^2, \sigma_3^2(\theta)\right)$ and \\ $d_{H \phi_2} \leftarrow d_H\left(\sigma_2^2, \sigma_2^2(\theta)\right);$
+                
+                \State At $\phi_{\{3,2\}}$ : 
+                
+                \If{ $d_{H \phi_3}>d_{H \phi_2}$}
+                    \State Select $\phi \leftarrow \phi_3$;
+                \Else{}
+                  \State Select $\phi \leftarrow \phi_2$;
+                \EndIf
+                % end of first if else, start of second
+
+                \If {$\phi>\pi / 8$} 
+                    \State $\theta_0 \leftarrow \phi-\pi / 4;$
+                     \ElsIf { $\phi<-\pi / 8$}
+                        \State $ \theta_0 \leftarrow \phi+\pi / 4;$
+                \Else{}
+                  \State $\theta_0 \leftarrow \phi;$
+                \EndIf
+
+            \End
+            
+	\end{algorithmic} 
+\end{algorithm}
+
+\end{document}
